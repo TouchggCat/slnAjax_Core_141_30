@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Styles{
+    <style>
+        h1 {
+            background-color: lightgray;
+        }
+    </style>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<input type="button" value="Hello" id="hi" />
+<table class="table table-striped" id="kk">
+</table>
+@section Scripts{
+    @*<table class="table table-striped">
+            <thead>
+                <tr><th>name</th><th> workYears</th><th>salary</th></tr>
+            </thead>
+            <tbody class="showEmp">
+            </tbody>
+        </table>*@
+    <script>
+
+        //console.log("Hello");
+   
+        let createtable = document.getElementById("kk");
+        let thead = document.createElement("thead");
+        let tbody = document.createElement("tbody");
+        createtable.appendChild(thead);
+        createtable.appendChild(tbody);
+
+        var emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+        let tableH="<tr>";
+
+        //顯示Key名稱的方法，先取其中一個emp.employees
+        let fuckingKey = Object.keys(emp.employees[0]); //此為key陣列
+        for (let i = 0; i < fuckingKey.length; i++) {                //迴圈取陣列key名稱
+            console.log(fuckingKey[i]);
+            tableH += `<th>${fuckingKey[i]}</th>`;
+        }
+        tableH += "</tr>";
+        console.log(Object.keys(emp.employees[0]));
+        console.log(tableH);
+
+        let t;    //要在外面宣告
+        let showtableContent = () => {
+            for (let i = 0, max = emp.employees.length; i < max; i++) {
+                console.log(emp.employees[i].name);
+                console.log(emp.employees[i].workYears);
+                console.log(emp.employees[i].salary);
+
+                let n = emp.employees[i].name;
+                let y = emp.employees[i].workYears;
+                let s = emp.employees[i].salary;
+                //let t += `<tr><td>${n}</td><td>${y}</td><td>${s}</td></tr>`;  //不能這樣寫
+                t += `<tr><td>${n}</td><td>${y}</td><td>${s}</td></tr>`
+            }
+            console.log(t);
+            $(".showEmp").html(t);
+        }
+  
+   
+        $("#hi").click(function () {
+            $(".display-4").text("Welcome MVC!!");
+
+            //=========================
+            /*$("thead").html("<tr><th>name</th><th> workYears</th><th>salary</th></tr>");*/
+            $("thead").html(tableH);
+            $("tbody").addClass("showEmp");
+            showtableContent();
+        })
+
+    </script>
+}
