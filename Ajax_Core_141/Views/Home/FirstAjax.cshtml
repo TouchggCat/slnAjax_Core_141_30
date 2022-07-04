@@ -1,0 +1,79 @@
+﻿
+
+@{
+    ViewData["Title"] = "FirstAjax";
+}
+
+<h1>FirstAjax</h1>
+<input type="text" class="form-control" id="inputName" placeholder="請輸入姓名" />
+<input type="number" class="form-control" id="inputAge" placeholder="請輸入年紀" />
+<button type="button" class="btn btn-primary mb-3" id="buttonStart">Ajax Start</button>
+<button type="button" class="btn btn-primary mb-3" id="buttonStop">Ajax Stop</button>
+<div id="div1" class="alert alert-secondary"></div>
+
+@section Scripts{
+    <script>
+        //console.log("@Url.Action("abc","api")")
+        //console.log("@Url.Content("~/api/index?name=eric")")
+
+        const btnStart = document.querySelector('#buttonStart');
+        const btnStop = document.querySelector('#buttonStop');
+        const divInfo = document.querySelector('#div1');
+        const txtName = document.querySelector('#inputName');
+        const txtAge = document.querySelector('#inputAge');
+
+        const xhr = new XMLHttpRequest();  //step1
+
+        btnStop.addEventListener('click', () => {
+            xhr.abort(); //呼叫abort方法
+        })
+
+        btnStart.addEventListener('click', () => {
+            
+         /*const xhr = new XMLHttpRequest();*/
+
+            xhr.addEventListener('load', () => {    //step3
+
+                const data = xhr.responseText;      //step3
+
+                divInfo.innerHTML = `<h2>${data}</h2>`;
+          })
+
+
+            xhr.addEventListener('loadstart', () => {
+                console.log('loadstart');
+                btnStart.textContent = "Loading...";
+                btnStart.setAttribute('disabled', 'disabled');
+            })
+            xhr.addEventListener('loadend', () => {
+                console.log('loadend');
+                btnStart.removeAttribute('disabled');
+                btnStart.textContent = "Ajax Start";
+            })
+            xhr.addEventListener('timeout', () => {
+                console.log('timeout');
+                divInfo.innerHTML = "<h3>伺服器忙碌中請稍後再來</h3>"
+            })
+            xhr.addEventListener('abort', () => {
+                console.log('abort');
+                divInfo.innerHTML = "<h3>您終止了程式的執行</h3>"
+            })
+
+            //xhr.open("GET", "/api/index");
+            //xhr.open("GET", `/api/index?name=${txtName.value}&age=${txtAge.value}`);
+            const url="@Url.Content("~/api/index")";
+            const params =`?name=${txtName.value}&age=${txtAge.value}`;
+        //要注意不能有空格!!!!
+
+
+            xhr.open("GET", url + params);  //step2
+
+            xhr.timeout = 3000; //3秒鐘伺服器沒有回傳結果就終止程式的執行
+
+            xhr.send();   //step2
+
+
+
+        })
+    </script>
+}
