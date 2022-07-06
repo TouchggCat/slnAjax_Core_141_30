@@ -48,7 +48,7 @@
 
         })
     const param=`name=${txtName.value}&email=${txtEmail.value}&age=${txtAge.value}`
-    xhr.open('POST','@Url.Content("~/api/index")');
+    xhr.open('POST', '@Url.Content("~/api/index")');  //GET、PUT、DELETE
     xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     xhr.send(param);
     })

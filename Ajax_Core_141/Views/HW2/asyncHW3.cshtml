@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "asyncHW3";
+}
+
+<h1>asyncHW3</h1>
+
+<select id="select1"></select>
+<select id="select2"></select>
+<select id="select3"></select>
+@section Scripts{
+    <script>
+        const cityOption = document.querySelector("#select1");
+        const districtOption = document.querySelector("#select2");
+        const roadOption = document.querySelector("#select3");
+
+        cityOption.addEventListener('change', () => {
+            /*移除全部的項目 $("#select option").remove();*/
+            /*cityOption.innerHTML = "";*/
+            $("#select2 option").remove();
+            LoadDistrict();
+
+        })
+        districtOption.addEventListener('change', () => {
+            $("#select3 option").remove();
+            LoadRoad();
+        })
+
+        async function LoadCity() {
+            const responseCity = await fetch('@Url.Content("~/api/city")');
+
+            const cityDatas = await responseCity.json();
+            cityDatas.forEach(demoCity => {
+                const opt = new Option(demoCity, demoCity);
+                cityOption.options.add(opt);
+
+            });
+            LoadDistrict();
+        };
+
+        async function LoadDistrict() {
+                 //讀出使用者city選擇的資料
+                const  selectedCity = cityOption.options[cityOption.selectedIndex].value;
+            //要確認要傳入的參數名稱city=${selectedCity}
+                const responseDistrict = await fetch('@Url.Content("~/api/districts")' + `?city=${selectedCity}`)
+            const districtDatas = await responseDistrict.json();
+            districtDatas.forEach(district => {
+            const opt = new Option(district, district);
+            districtOption.options.add(opt);
+        });
+        LoadRoad();
+        };
+
+        async function LoadRoad() {
+                 //讀出使用者district選擇的資料
+            const selectedDistrict = districtOption.options[districtOption.selectedIndex].value;
+            console.log(selectedDistrict);
+            const responseRoad = await fetch('@Url.Content("~/api/Roads")' + `?district=${selectedDistrict}`)
+            const roadDatas = await responseRoad.json();
+            roadDatas.forEach(road => {
+            const opt = new Option(road,road);
+            roadOption.options.add(opt);
+        });
+        };
+
+
+        LoadCity();   //函式要被呼叫
+
+
+    </script>
+}

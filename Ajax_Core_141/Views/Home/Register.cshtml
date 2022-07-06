@@ -25,8 +25,14 @@
                 <label for="InputAge">年紀</label>
                 <input type="number" class="form-control" id="InputAge" name="age">
             </div>
-            <button type="submit" class="btn btn-primary">確認</button>
+            <div class="custom-file  mt-3">
+                <input type="file" class="custom-file-input" id="customFile" name="file">
+                <label class="custom-file-label" for="customFile">選擇檔案</label>
+                <button type="submit" class="btn btn-primary">確認</button>
+                @*要記得包在form裡面*@
+            </div>
         </form>
+ 
 
         <div class="alert alert-info" id="div1"></div>
     </div>
@@ -35,23 +41,39 @@
 @section Scripts{
     <script>
     const btnSubmit = document.querySelector('.btn');
-    const divInfo = document.querySelector('#div1');
+        const divInfo = document.querySelector('#div1');
 
-        btnSubmit.addEventListener('click', (event1234) => {
-            event1234.preventDefault();  //停止預設行為 submit link
 
-            const xhr = new XMLHttpRequest();
+
+
+
+        btnSubmit.addEventListener('click', (evt) => {
+            evt.preventDefault();  //停止預設行為 submit link
+
             const formData = new FormData(document.userInfo);
+            //=================使用Fetch方法上傳
+                 fetch('@Url.Content("~/api/register")', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => divInfo.innerHTML = data);
 
-            xhr.addEventListener('load', () => {
-                console.log('load');
-                const data = xhr.responseText;
-                divInfo.innerHTML = `<h3>${data}</h3>`;
-            })
 
-            xhr.open('POST', '@Url.Content("~/api/index")');
-               //xhr.open('POST', document.userInfo.action);  //<form>裡面有action="~/api/index"屬性時
-            xhr.send(formData);
+            //=================使用XML方法上傳
+             /* const xhr = new XMLHttpRequest();*/
+            //xhr.addEventListener('load', () => {
+            //    console.log('load');
+            //    const data = xhr.responseText;    //return Content()的資料
+            //    divInfo.innerHTML = `<h3>${data}</h3>`;
+            //    console.log(data);
+            //    console.log(divInfo.innerHTML);
+            //})
+
+                    @*xhr.open('POST', '@Url.Content("~/Api/Register")');    //for上傳檔案
+            xhr.open('POST', '@Url.Content("~/api/index")');      //for幾歲 名字
+             xhr.open('POST', document.userInfo.action);  //<form>裡面有action="~/api/index"屬性時
+            xhr.send(formData);*@
 
         });
 

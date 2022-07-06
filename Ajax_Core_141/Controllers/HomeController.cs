@@ -44,6 +44,43 @@ namespace Ajax_Core_141.Controllers
             return View();
         }
 
+
+        public IActionResult Address()
+        {
+            return View();
+        }
+
+        public IActionResult Promise()
+        {
+            return View();
+        }
+
+        public IActionResult Fetch()
+        {
+            return View();
+        }
+        public IActionResult History()
+        {
+            return View();
+        }
+        public IActionResult jQuery()
+        {
+            return View();
+        }
+        public IActionResult Partial()
+        {
+            ViewBag.data = "Hello Partial!!";
+            return PartialView();   //新增局部檢視
+        }
+
+        public IActionResult ShipperCors()
+        {
+            return View();
+        }
+        public IActionResult ShipperCorsEmpty()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

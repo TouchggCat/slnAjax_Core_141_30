@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+
+<select id="select1">
+</select>
+@section Scripts{
+    <script>
+        const cityOption = document.querySelector("#select1");
+        cityOption.addEventListener('change', () => {
+            //讀出使用者選擇的資料
+            console.log(cityOption.options[cityOption.selectedIndex].value);
+        })
+    let xhr =new XMLHttpRequest();
+    //xhr.addEventListener('load', () => {
+
+    //    let data = xhr.responseText;
+    //    let jasonData = JSON.parse(data);
+    //    jasonData.foreach((city) => {
+    //        const opt = new Option(city, city);
+    //        cityOption.options.add(opt);
+    //    })
+    //})
+        //===============================可以用的版本
+        xhr.addEventListener('load', () => {
+            //console.log(xhr.responseText);
+            //console.log(JSON.parse(xhr.responseText)); 將JSON字串轉成JSON物件
+            const datas = JSON.parse(xhr.responseText);
+            datas.forEach((city) => {
+                //將資料放進select標籤中
+                const opt = new Option(city, city);
+                cityOption.options.add(opt);
+            })
+        })
+//==================
+
+    xhr.open('GET','@Url.Content("~/Api/City")');
+        xhr.send();
+
+    </script>
+}

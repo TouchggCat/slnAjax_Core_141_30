@@ -8,7 +8,8 @@
         }
     </style>
 }
-
+@Html.Partial("Partial")
+<hr />
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -27,7 +28,7 @@
     <script>
 
         //console.log("Hello");
-   
+
         let createtable = document.getElementById("kk");
         let thead = document.createElement("thead");
         let tbody = document.createElement("tbody");
@@ -41,7 +42,7 @@
                 { "name": "Mary", "workYears": 7, "salary": 45000 }
             ]
         };
-        let tableH="<tr>";
+        let tableH = "<tr>";
 
         //顯示Key名稱的方法，先取其中一個emp.employees
         let fuckingKey = Object.keys(emp.employees[0]); //此為key陣列
@@ -69,8 +70,8 @@
             console.log(t);
             $(".showEmp").html(t);
         }
-  
-   
+
+
         $("#hi").click(function () {
             $(".display-4").text("Welcome MVC!!");
 

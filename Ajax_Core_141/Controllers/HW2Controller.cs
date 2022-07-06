@@ -39,10 +39,13 @@ namespace Ajax_Core_141_30.Controllers
             {
                user.emailState = "帳號可使用";
             }
-               
-
 
             return Content(user.emailState, "text/html", System.Text.Encoding.UTF8);
+        }
+
+        public IActionResult asyncHW3()
+        {
+            return View();
         }
     }
 }
